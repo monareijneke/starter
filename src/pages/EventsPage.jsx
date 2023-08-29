@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { EventPage } from "./EventPage";
+import { CardPage } from "./Card";
 import { TextInput } from "./TextInput";
 import { useLoaderData } from "react-router-dom";
 import { Heading, Flex, Wrap, Center } from "@chakra-ui/react";
@@ -38,7 +38,7 @@ export const EventsPage = ({ clickFn }) => {
       <Wrap spacing="10px">
         <Center>
           {events.map(event => (
-            <EventPage
+            <CardPage
               clickFn={clickFn}
               item={event}
               cat={categories}
