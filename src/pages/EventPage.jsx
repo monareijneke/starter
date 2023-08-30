@@ -1,15 +1,4 @@
-import {
-  Text,
-  CardFooter,
-  Heading,
-  Flex,
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  Image,
-  HStack,
-} from "@chakra-ui/react";
+import { Text, Flex } from "@chakra-ui/react";
 
 export const EventPage = () => {
   return (
