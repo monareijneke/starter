@@ -9,12 +9,6 @@ export const Navigation = () => {
           <li>
             <Link to="/">Events</Link>
           </li>
-          <li>
-            <Link to="/event/1">Event</Link>
-          </li>
-          <li>
-            <Link to="/form">Add Event</Link>
-          </li>
         </ul>
       </nav>
     </>

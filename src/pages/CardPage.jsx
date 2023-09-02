@@ -12,11 +12,6 @@ import {
 } from "@chakra-ui/react";
 
 export const CardPage = ({ clickFn, item }) => {
-  const start = item.startTime.split("T");
-  const startTime = start[1].slice(0, 5);
-  const end = item.endTime.split("T");
-  const endTime = end[1].slice(0, 5);
-
   return (
     <Grid>
       <Card
@@ -40,19 +35,9 @@ export const CardPage = ({ clickFn, item }) => {
           <Text fontSize="1em">{item.description}</Text>
         </CardBody>
         <CardFooter fontSize="0.9em">
-          from {startTime} till {endTime}
+          from {item.startTime} till {item.endTime}
         </CardFooter>
       </Card>
     </Grid>
   );
 };
-
-// const eventsWithCategory = events.map(event => {
-//   return {
-//     ...event,
-//     categories: event.categoryIds.map(
-//       id => categories.find(category => category.id == id).name
-//     ),
-//   };
-// });
-// console.log(eventsWithCategory);

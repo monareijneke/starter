@@ -1,33 +1,15 @@
 import {
   Center,
-  ListItem,
-  Heading,
   Flex,
   Card,
   CardHeader,
   CardBody,
   CardFooter,
-  Text,
   Button,
-  HStack,
   Tag,
   TagLabel,
   Image,
-  Divider,
-  Spacer,
 } from "@chakra-ui/react";
-
-// export const action = async ({ request }) => {
-// const formData = Object.fromEntries(await request.formData());
-// const deleteId = await fetch("http://localhost:3000/events", {
-//   method: "DELETE",
-//   body: JSON.stringify(formData),
-//   headers: { "Content-Type": "application/json" },
-// })
-//   .then(res => res.json())
-//   .then(json => json.id);
-// return redirect(`/events/${deleteId}`);
-// };
 
 export const loader = async () => {
   return await fetch("http://localhost:3000/users");
@@ -36,7 +18,7 @@ export const loader = async () => {
 export const EventPage = ({ item }) => {
   console.log(item);
   return (
-    <Center flexDir="column" align="center">
+    <Center flexDir="column" align="center" w="100%">
       <Card w="65%" h="full">
         <CardHeader>
           <h1>{item.title}</h1>

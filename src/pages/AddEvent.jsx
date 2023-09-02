@@ -7,6 +7,7 @@ import {
   Heading,
   FormLabel,
   Button,
+  Link,
 } from "@chakra-ui/react";
 
 export const action = async ({ request }) => {
@@ -44,7 +45,15 @@ export const AddEvent = () => {
             placeholder="short description"
             rows="8"
           />
-
+          <FormLabel>Category</FormLabel>
+          <Input type="text" name="categories" width="md" />
+          <FormLabel>Where</FormLabel>
+          <Input type="text" name="location" width="md" />
+          <FormLabel>When</FormLabel>
+          <Input type="text" name="title" width="md" />
+          <Button colorScheme="gray" size="sm" type="back">
+            <Link to="/EventsPage">back</Link>
+          </Button>
           <stack>
             <select placeholder="select user" name="userId">
               {users.map(user => (
@@ -54,7 +63,14 @@ export const AddEvent = () => {
               ))}
             </select>
           </stack>
-          <Button colorScheme="teal" size="sm" type="submit">
+          <Button
+            onClick={() => {
+              action;
+            }}
+            colorScheme="teal"
+            size="sm"
+            type="submit"
+          >
             sumbit
           </Button>
         </FormControl>
