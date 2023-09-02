@@ -1,5 +1,7 @@
 import {
   Text,
+  Tag,
+  TagLabel,
   CardFooter,
   Heading,
   Grid,
@@ -9,7 +11,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 
-export const CardPage = ({ item, clickFn }) => {
+export const CardPage = ({ clickFn, item }) => {
   const start = item.startTime.split("T");
   const startTime = start[1].slice(0, 5);
   const end = item.endTime.split("T");
@@ -30,9 +32,9 @@ export const CardPage = ({ item, clickFn }) => {
             <Image src={item.image} borderRadius="5px" w="full" h="8em" />
             {item.title}
           </Heading>
-          <Text fontStyle="italic" align="center">
-            {item.categories}
-          </Text>
+          <Tag key={item.categories} variant="outline" color="#38B2AC">
+            <TagLabel>{item.categories}</TagLabel>
+          </Tag>
         </CardHeader>
         <CardBody pt={0}>
           <Text fontSize="1em">{item.description}</Text>

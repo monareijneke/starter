@@ -1,11 +1,14 @@
-import { Input } from "@chakra-ui/react";
+import { Input, Text, Box } from "@chakra-ui/react";
 
 export const TextInput = ({ changeFn, ...props }) => (
-  <Input
-    width="auto"
-    borderColor="green"
-    variant="filled"
-    onChange={changeFn}
-    {...props}
-  ></Input>
+  <Box align="center">
+    <Text align="center">search on name:</Text>
+    <Input
+      width="auto"
+      borderColor="green"
+      variant="filled"
+      onChange={changeFn}
+      {...props}
+    ></Input>
+  </Box>
 );
