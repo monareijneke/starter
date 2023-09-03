@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         // action: addComment,
       },
       {
-        path: "/AddEvent",
+        path: "/add",
         element: <AddEvent />,
         loader: addEventLoader,
         //action: addComment,

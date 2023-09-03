@@ -10,9 +10,11 @@ import {
   TagLabel,
   Avatar,
   Text,
+  Box,
+  Spacer,
   Image,
 } from "@chakra-ui/react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 
 export const loader = async () => {
   return await fetch("http://localhost:3000/events");
@@ -25,7 +27,7 @@ export const EventPage = ({ item, clickFn }) => {
   return (
     <Center flexDir="column" align="center" w="100%" bg="lightgrey">
       <Card w="100%" h="full">
-        <CardHeader>
+        <CardHeader fontWeight="bold">
           <h1>{item.title}</h1>
           <CardHeader m={0} p={0}>
             <Flex flexDir="column" color="white">
@@ -33,32 +35,76 @@ export const EventPage = ({ item, clickFn }) => {
             </Flex>
           </CardHeader>
         </CardHeader>
-        <CardBody>
-          <Text>What: {item.description}</Text>
-          <Text>
-            When: {item.startTime} - {item.endTime}
-          </Text>
-          <Text>Where: {item.location}</Text>
-          <Text>
-            Categories:
-            {item.categories.map(category => {
-              return category;
-            })}
-          </Text>
+        <CardBody align="left">
+          <Flex>
+            <Text fontStyle="italic" fontWeight="bold">
+              What:{" "}
+            </Text>
+            <Text> {item.description}</Text>
+          </Flex>
+          <Flex>
+            <Text fontStyle="italic" fontWeight="bold">
+              Time:{" "}
+            </Text>
+            <Text>
+              {item.startTime} - {item.endTime} hrs
+            </Text>
+          </Flex>
+          <Flex>
+            <Text fontStyle="italic" fontWeight="bold">
+              Where:{" "}
+            </Text>
+            <Text>{item.location}</Text>
+          </Flex>
+          <Flex>
+            <Text fontStyle="italic" fontWeight="bold">
+              Categories:
+            </Text>
+            <Text>
+              {item.categories.map(category => {
+                return category;
+              })}
+            </Text>
+          </Flex>
         </CardBody>
+        <hr />
         <CardFooter>
-          <Tag size="lg" w="50%" borderRadius="full">
-            <Avatar
-              src={item.userImage}
-              size="md"
-              name={item.userName}
-              ml={-3}
-            />
+          <Flex w="100%">
+            <Box w="50%">
+              <Tag size="lg" borderRadius="full" bgColor="white">
+                <Avatar
+                  src={item.userImage}
+                  size="md"
+                  name={item.userName}
+                  ml={-3}
+                  mr={3}
+                />
 
-            <TagLabel> {item.userName}</TagLabel>
-          </Tag>
-          <Button>edit</Button>
-          <Button>delete</Button>
+                <TagLabel> {item.userName}</TagLabel>
+              </Tag>
+            </Box>
+            <Spacer />
+            <Box w="16.5%">
+              <Button mt={1} onClick={clickFn}>
+                edit
+              </Button>
+            </Box>
+            <Spacer />
+            <Box w="16.5%">
+              <Button mt={1}>delete</Button>
+            </Box>
+            <Spacer />
+            <Box w="16.5%">
+              <Button
+                onClick={() => {
+                  "/";
+                }}
+                mt={1}
+              >
+                back
+              </Button>
+            </Box>
+          </Flex>
         </CardFooter>
       </Card>
     </Center>

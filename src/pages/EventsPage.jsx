@@ -3,7 +3,7 @@ import { AddEvent } from "./AddEvent";
 import { CardPage } from "./CardPage";
 import { EventPage } from "./EventPage";
 import { TextInput } from "./TextInput";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import {
   Spacer,
   Flex,
@@ -11,7 +11,9 @@ import {
   WrapItem,
   Center,
   Button,
-  Link,
+  Radio,
+  RadioGroup,
+  Stack,
 } from "@chakra-ui/react";
 
 export const loader = async () => {
@@ -30,6 +32,7 @@ export const EventsPage = () => {
   const { events, categories, users } = useLoaderData();
   const [searchField, setSearchField] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
+  const [value, setValue] = useState("");
 
   const eventsWithCategory = events.map(event => {
     return {
@@ -63,15 +66,25 @@ export const EventsPage = () => {
   return (
     <Flex flexDirection={"column"} bg="lightsteelblue" w="100%">
       <Flex flexDir="row">
-        <TextInput
-          item={searchField}
-          changeFn={handleChange}
-          width="15em"
-          mb={10}
-        />
+        <Flex flexDir="column">
+          <TextInput item={searchField} changeFn={handleChange} width="15em" />
+          <RadioGroup m="0 0 15px 20px" onChange={setValue} value={value}>
+            <Stack align="center" direction="row">
+              <Radio value={1}>Sports</Radio>
+              <Radio value={2}>Games</Radio>
+              <Radio value={3}>Relaxation</Radio>
+            </Stack>
+          </RadioGroup>
+        </Flex>
         <Spacer />
-        <Button color="white" bg="darkblue" m="25px">
-          <Link to="/AddEvent">Add your own Event</Link>
+
+        <Button
+          onClick={() => <Link to="/add" />}
+          color="white"
+          bg="darkblue"
+          m="25px"
+        >
+          Add your own Event
         </Button>
       </Flex>
       {searchField ? (
