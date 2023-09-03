@@ -38,6 +38,7 @@ export const EventsPage = () => {
         id => categories.find(category => category.id == id).name
       ),
       userName: users.find(user => user.id == event.createdBy).name,
+      userImage: users.find(user => user.id == event.createdBy).image,
     };
   });
   const matchedEvents = events.filter(event => {
@@ -74,7 +75,11 @@ export const EventsPage = () => {
         </Button>
       </Flex>
       {searchField ? (
-        <EventPage item={matchedEvents} />
+        <CardPage
+          item={matchedEvents}
+          key={matchedEvents.id}
+          onClick={setSelectedEvent}
+        />
       ) : (
         <>
           {selectedEvent ? (

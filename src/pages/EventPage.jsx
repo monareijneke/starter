@@ -8,33 +8,55 @@ import {
   Button,
   Tag,
   TagLabel,
+  Avatar,
+  Text,
   Image,
 } from "@chakra-ui/react";
+import { useLoaderData } from "react-router-dom";
 
 export const loader = async () => {
-  return await fetch("http://localhost:3000/users");
+  return await fetch("http://localhost:3000/events");
 };
 
-export const EventPage = ({ item }) => {
+export const EventPage = ({ item, clickFn }) => {
   console.log(item);
+  const events = useLoaderData();
+  console.log(events);
   return (
-    <Center flexDir="column" align="center" w="100%">
-      <Card w="65%" h="full">
+    <Center flexDir="column" align="center" w="100%" bg="lightgrey">
+      <Card w="100%" h="full">
         <CardHeader>
           <h1>{item.title}</h1>
-          <CardHeader p={0}>
-            <Flex flexDir="column">
+          <CardHeader m={0} p={0}>
+            <Flex flexDir="column" color="white">
               <Image src={item.image} w="100%" h="15em" />
-              <Tag key={item.userName} variant="outline" color="#38B2AC">
-                <TagLabel>{item.userName}</TagLabel>
-              </Tag>
             </Flex>
           </CardHeader>
         </CardHeader>
         <CardBody>
-          <Tag size="lg" borderRadius="full"></Tag>
+          <Text>What: {item.description}</Text>
+          <Text>
+            When: {item.startTime} - {item.endTime}
+          </Text>
+          <Text>Where: {item.location}</Text>
+          <Text>
+            Categories:
+            {item.categories.map(category => {
+              return category;
+            })}
+          </Text>
         </CardBody>
         <CardFooter>
+          <Tag size="lg" w="50%" borderRadius="full">
+            <Avatar
+              src={item.userImage}
+              size="md"
+              name={item.userName}
+              ml={-3}
+            />
+
+            <TagLabel> {item.userName}</TagLabel>
+          </Tag>
           <Button>edit</Button>
           <Button>delete</Button>
         </CardFooter>

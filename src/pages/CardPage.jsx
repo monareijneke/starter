@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 export const CardPage = ({ clickFn, item }) => {
+  console.log(item);
   return (
     <Grid>
       <Card
@@ -24,11 +25,16 @@ export const CardPage = ({ clickFn, item }) => {
       >
         <CardHeader>
           <Heading color="#38B2AC" size="md" align="center">
+            CardPage
             <Image src={item.image} borderRadius="5px" w="full" h="8em" />
             {item.title}
           </Heading>
           <Tag key={item.categories} variant="outline" color="#38B2AC">
-            <TagLabel>{item.categories}</TagLabel>
+            <TagLabel>
+              {item.categories.map(category => {
+                return category;
+              })}
+            </TagLabel>
           </Tag>
         </CardHeader>
         <CardBody pt={0}>
