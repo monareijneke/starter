@@ -15,15 +15,15 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { useLoaderData, Link } from "react-router-dom";
+import { ModalDelete } from "./ModalDelete";
 
 export const loader = async () => {
   return await fetch("http://localhost:3000/events");
 };
 
 export const EventPage = ({ item, clickFn }) => {
-  console.log(item);
   const events = useLoaderData();
-  console.log(events);
+
   return (
     <Center flexDir="column" align="center" w="100%" bg="lightgrey">
       <Card w="100%" h="full">
@@ -91,16 +91,19 @@ export const EventPage = ({ item, clickFn }) => {
             </Box>
             <Spacer />
             <Box w="16.5%">
-              <Button mt={1}>delete</Button>
+              <Button
+                mt={1}
+                onClick={() => {
+                  ModalDelete; //dit werkt niet
+                }}
+              >
+                delete
+              </Button>
             </Box>
             <Spacer />
             <Box w="16.5%">
-              <Button
-                onClick={() => {
-                  "/";
-                }}
-                mt={1}
-              >
+              <Button onClick={() => <Link to="/" />} mt={1}>
+                {/* dit werkt ook niet */}
                 back
               </Button>
             </Box>

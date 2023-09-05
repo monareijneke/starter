@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { AddEvent } from "./AddEvent";
+
 import { CardPage } from "./CardPage";
 import { EventPage } from "./EventPage";
 import { TextInput } from "./TextInput";
@@ -44,9 +44,6 @@ export const EventsPage = () => {
       userImage: users.find(user => user.id == event.createdBy).image,
     };
   });
-  const matchedEvents = events.filter(event => {
-    return event.title.toLowerCase().includes(searchField.toLowerCase());
-  });
 
   const clearTime = eventsWithCategory.map(event => {
     const start = event.startTime.split("T");
@@ -63,6 +60,11 @@ export const EventsPage = () => {
   const handleChange = event => {
     setSearchField(event.target.value);
   };
+
+  const matchedEvents = events.filter(event => {
+    return event.title.toLowerCase().includes(searchField.toLowerCase());
+  });
+
   return (
     <Flex flexDirection={"column"} bg="lightsteelblue" w="100%">
       <Flex flexDir="row">
@@ -87,11 +89,12 @@ export const EventsPage = () => {
           Add your own Event
         </Button>
       </Flex>
+
       {searchField ? (
         <CardPage
           item={matchedEvents}
           key={matchedEvents.id}
-          onClick={setSelectedEvent}
+          clickFn={setSelectedEvent}
         />
       ) : (
         <>
