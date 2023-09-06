@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 
 import { EventPage, loader as eventPageLoader } from "./pages/EventPage";
 import { EventsPage, loader as eventsPageLoader } from "./pages/EventsPage";
-import { AddEvent, loader as addEventLoader } from "./pages/AddEvent";
+import { action, AddEvent, loader as addEventLoader } from "./pages/AddEvent";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         path: "/add",
         element: <AddEvent />,
         loader: addEventLoader,
-        //action: addComment,
+        action: action,
       },
     ],
   },
