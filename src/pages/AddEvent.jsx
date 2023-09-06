@@ -1,7 +1,7 @@
 import { useLoaderData, redirect } from "react-router-dom";
 import {
   Container,
-  Form,
+  FormControl,
   Input,
   Textarea,
   Heading,
@@ -36,7 +36,7 @@ export const AddEvent = () => {
         <Heading padding="5px" fontSize="md">
           Input for new Event
         </Heading>
-        <Form method="post">
+        <FormControl method="post">
           <FormLabel>Title</FormLabel>
           <Input type="text" name="title" width="md" />
           <FormLabel>Decription</FormLabel>
@@ -66,7 +66,7 @@ export const AddEvent = () => {
           <Button colorScheme="teal" size="sm" type="submit">
             sumbit
           </Button>
-        </Form>
+        </FormControl>
       </Container>
     </>
   );
