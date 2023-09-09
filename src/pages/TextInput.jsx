@@ -1,6 +1,6 @@
 import { Input, Box } from "@chakra-ui/react";
 
-export const TextInput = ({ changeFn, ...props }) => (
+export const TextInput = ({ changeFn, item }) => (
   <Box align="center">
     <Input
       m="25px"
@@ -9,7 +9,7 @@ export const TextInput = ({ changeFn, ...props }) => (
       borderColor="green"
       variant="filled"
       onChange={changeFn}
-      {...props}
+      {...item}
     ></Input>
   </Box>
 );

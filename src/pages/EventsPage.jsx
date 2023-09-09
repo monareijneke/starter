@@ -29,33 +29,33 @@ export const loader = async () => {
 };
 
 export const EventsPage = () => {
-  const { events, categories, users } = useLoaderData();
+  const { events } = useLoaderData();
   const [searchField, setSearchField] = useState("");
-  const [selectedEvent, setSelectedEvent] = useState("");
+  //const [selectedEvent, setSelectedEvent] = useState("");
   const [value, setValue] = useState("");
+  console.log(events);
+  // const eventsWithCategory = events.map(event => {
+  //   return {
+  //     ...event,
+  //     categories: event.categoryIds.map(
+  //       id => categories.find(category => category.id == id).name
+  //     ),
+  //     userName: users.find(user => user.id == event.createdBy).name,
+  //     userImage: users.find(user => user.id == event.createdBy).image,
+  //   };
+  // });
 
-  const eventsWithCategory = events.map(event => {
-    return {
-      ...event,
-      categories: event.categoryIds.map(
-        id => categories.find(category => category.id == id).name
-      ),
-      userName: users.find(user => user.id == event.createdBy).name,
-      userImage: users.find(user => user.id == event.createdBy).image,
-    };
-  });
-
-  const clearTime = eventsWithCategory.map(event => {
-    const start = event.startTime.split("T");
-    const clearStartTime = start[1].slice(0, 5);
-    const end = event.endTime.split("T");
-    const clearEndTime = end[1].slice(0, 5);
-    return {
-      ...event,
-      startTime: clearStartTime,
-      endTime: clearEndTime,
-    };
-  });
+  // const clearTime = eventsWithCategory.map(event => {
+  //   const start = event.startTime.split("T");
+  //   const clearStartTime = start[1].slice(0, 5);
+  //   const end = event.endTime.split("T");
+  //   const clearEndTime = end[1].slice(0, 5);
+  //   return {
+  //     ...event,
+  //     startTime: clearStartTime,
+  //     endTime: clearEndTime,
+  //   };
+  // });
 
   const handleChange = event => {
     setSearchField(event.target.value);
@@ -79,44 +79,32 @@ export const EventsPage = () => {
           </RadioGroup>
         </Flex>
         <Spacer />
-
-        <Button
-          onClick={() => <Link to="/add" />}
-          color="white"
-          bg="darkblue"
-          m="25px"
-        >
-          Add your own Event
-        </Button>
+        <Link to={"/add"}>
+          <Button color="white" bg="darkblue" m="25px">
+            Add your own Event
+          </Button>
+        </Link>
       </Flex>
 
       {searchField ? (
         <CardPage
           item={matchedEvents}
           key={matchedEvents.id}
-          clickFn={setSelectedEvent}
+          //clickFn={setSelectedEvent}
         />
       ) : (
         <>
-          {selectedEvent ? (
-            <>
-              <EventPage item={selectedEvent} clickFn={setSelectedEvent} />
-            </>
-          ) : (
-            <Wrap>
-              <WrapItem>
-                <Center gap={4}>
-                  {clearTime.map(event => (
-                    <CardPage
-                      clickFn={setSelectedEvent}
-                      item={event}
-                      key={event.id}
-                    />
-                  ))}
-                </Center>
-              </WrapItem>
-            </Wrap>
-          )}
+          <Wrap>
+            <WrapItem>
+              <Center gap={4}>
+                <Link to={`events/${events.id}`}>
+                  {/* {events.map(event => (
+                    <CardPage item={events} key={events.id} />
+                  ))} */}
+                </Link>
+              </Center>
+            </WrapItem>
+          </Wrap>
         </>
       )}
     </Flex>
