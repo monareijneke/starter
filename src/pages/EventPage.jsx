@@ -30,38 +30,31 @@ export const loader = async ({ params }) => {
 
 export const EventPage = () => {
   const { event, categories, users } = useLoaderData();
-  console.log(event);
-  const eventsWithCategory = event.map(event => {
-    return {
-      ...event,
-      categories: event.categoryIds.map(
-        id => categories.find(category => category.id == id).name
-      ),
-      userName: users.find(user => user.id == event.createdBy).name,
-      userImage: users.find(user => user.id == event.createdBy).image,
-    };
-  });
 
-  const clearTime = eventsWithCategory.map(event => {
-    const start = event.startTime.split("T");
-    const clearStartTime = start[1].slice(0, 5);
-    const end = event.endTime.split("T");
-    const clearEndTime = end[1].slice(0, 5);
-    return {
-      ...event,
-      startTime: clearStartTime,
-      endTime: clearEndTime,
-    };
-  });
+  const eventWithCategory = {
+    ...event,
+    categories: event.categoryIds.map(
+      id => categories.find(category => category.id == id).name
+    ),
+    userName: users.find(user => user.id == event.createdBy).name,
+    userImage: users.find(user => user.id == event.createdBy).image,
+  };
+
+  const finalEvent = {
+    ...eventWithCategory,
+    date: eventWithCategory.startTime.slice(0, 10).toString(),
+    startTime: eventWithCategory.startTime.split("T")[1].slice(0, 5).toString(),
+    endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
+  };
 
   return (
     <Center flexDir="column" align="center" w="100%" bg="lightgrey">
       <Card w="100%" h="full">
         <CardHeader fontWeight="bold">
-          <h1>{clearTime.title}</h1>
+          <h1>{finalEvent.title}</h1>
           <CardHeader m={0} p={0}>
             <Flex flexDir="column" color="white">
-              <Image src={clearTime.image} w="100%" h="15em" />
+              <Image src={finalEvent.image} w="100%" h="15em" />
             </Flex>
           </CardHeader>
         </CardHeader>
@@ -70,28 +63,34 @@ export const EventPage = () => {
             <Text fontStyle="italic" fontWeight="bold">
               What:{" "}
             </Text>
-            <Text> {clearTime.description}</Text>
+            <Text> {finalEvent.description}</Text>
+          </Flex>
+          <Flex>
+            <Text fontStyle="italic" fontWeight="bold">
+              When:{" "}
+            </Text>
+            <Text> {finalEvent.date}</Text>
           </Flex>
           <Flex>
             <Text fontStyle="italic" fontWeight="bold">
               Time:{" "}
             </Text>
             <Text>
-              {clearTime.startTime} - {clearTime.endTime} hrs
+              {finalEvent.startTime} - {finalEvent.endTime} hrs
             </Text>
           </Flex>
           <Flex>
             <Text fontStyle="italic" fontWeight="bold">
               Where:{" "}
             </Text>
-            <Text>{clearTime.location}</Text>
+            <Text>{finalEvent.location}</Text>
           </Flex>
           <Flex>
             <Text fontStyle="italic" fontWeight="bold">
               Categories:
             </Text>
             <Text>
-              {clearTime.categories.map(category => {
+              {finalEvent.categories.map(category => {
                 return category;
               })}
             </Text>
@@ -103,14 +102,14 @@ export const EventPage = () => {
             <Box w="50%">
               <Tag size="lg" borderRadius="full" bgColor="white">
                 <Avatar
-                  src={clearTime.userImage}
+                  src={finalEvent.userImage}
                   size="md"
-                  name={clearTime.userName}
+                  name={finalEvent.userName}
                   ml={-3}
                   mr={3}
                 />
 
-                <TagLabel> {clearTime.userName}</TagLabel>
+                <TagLabel> {finalEvent.userName}</TagLabel>
               </Tag>
             </Box>
             <Spacer />

@@ -11,13 +11,21 @@ import {
   Stack,
   HStack,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 
 export const createAction = async ({ request }) => {
   const data = Object.fromEntries(await request.formData());
+  const modifyStartTime = data.date.concat(`T${data.startTime}`);
+  const modifyEndTime = data.date.concat(`T${data.endTime}`);
+  const finalData = {
+    ...data,
+    startTime: modifyStartTime,
+    endTime: modifyEndTime,
+  };
   const newId = await fetch("http://localhost:3000/events", {
     method: "POST",
-    body: JSON.stringify(data),
+    body: JSON.stringify(finalData),
     headers: { "Content-Type": "application/json" },
   })
     .then(res => res.json())
@@ -36,6 +44,17 @@ export const loader = async () => {
 
 export const AddEvent = () => {
   const { users, categories } = useLoaderData();
+  const toast = useToast();
+  const showToast = () => {
+    toast({
+      title: "Submit",
+      description: "new event succesfully added",
+      duration: 3000,
+      isClosable: true,
+      status: "success",
+      position: "top",
+    });
+  };
 
   return (
     <>
@@ -74,7 +93,7 @@ export const AddEvent = () => {
 
               <FormLabel mb="0">Creator</FormLabel>
 
-              <Select name="userId">
+              <Select name="createdBy">
                 {users.map(user => (
                   <option key="" value={user.id}>
                     {user.name}
@@ -101,7 +120,12 @@ export const AddEvent = () => {
           </FormControl>
 
           <Stack>
-            <Button colorScheme="teal" size="sm" type="submit">
+            <Button
+              colorScheme="teal"
+              size="sm"
+              type="submit"
+              onClick={showToast}
+            >
               sumbit
             </Button>
           </Stack>

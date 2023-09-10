@@ -44,7 +44,7 @@ export const EventsPage = () => {
   });
 
   return (
-    <Flex flexDirection={"column"} bg="lightsteelblue" w="100%">
+    <Flex flexDirection={"column"} bg="lightsteelblue">
       <Flex flexDir="row">
         <Flex flexDir="column">
           <SearchInput
@@ -76,9 +76,7 @@ export const EventsPage = () => {
             <WrapItem>
               <Center gap={4}>
                 <Link to={`/events/:eventId`}>
-                  {events.map(event => (
-                    <CardPage item={event} key={event.id} />
-                  ))}
+                  <CardPage item={events} key={events.id} />
                 </Link>
               </Center>
             </WrapItem>
