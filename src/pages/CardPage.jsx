@@ -11,7 +11,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 
-export const CardPage = ({ clickFn, item }) => {
+export const CardPage = ({ item }) => {
   console.log(item);
   return (
     <Grid>
@@ -21,27 +21,26 @@ export const CardPage = ({ clickFn, item }) => {
         borderRadius={10}
         cursor="pointer"
         _hover={{ shadow: "dark-lg" }}
-        onClick={() => clickFn(item)}
       >
         <CardHeader>
           <Heading color="#38B2AC" size="md" align="center">
             CardPage
-            <Image src={item.image} borderRadius="5px" w="full" h="8em" />
-            {item.title}
+            <Image src={event.image} borderRadius="5px" w="full" h="8em" />
+            {event.title}
           </Heading>
-          <Tag key={item.categories} variant="outline" color="#38B2AC">
+          <Tag key={event.categories} variant="outline" color="#38B2AC">
             <TagLabel>
-              {item.categories.map(category => {
+              {event.categories.map(category => {
                 return category;
               })}
             </TagLabel>
           </Tag>
         </CardHeader>
         <CardBody pt={0}>
-          <Text fontSize="1em">{item.description}</Text>
+          <Text fontSize="1em">{event.description}</Text>
         </CardBody>
         <CardFooter fontSize="0.9em">
-          from {item.startTime} till {item.endTime}
+          from {event.startTime} till {event.endTime}
         </CardFooter>
       </Card>
     </Grid>

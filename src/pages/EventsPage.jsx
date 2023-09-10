@@ -2,7 +2,7 @@ import { React, useState } from "react";
 
 import { CardPage } from "./CardPage";
 import { EventPage } from "./EventPage";
-import { TextInput } from "./TextInput";
+import { SearchInput } from "./SearchInput";
 import { useLoaderData, Link } from "react-router-dom";
 import {
   Spacer,
@@ -30,32 +30,10 @@ export const loader = async () => {
 
 export const EventsPage = () => {
   const { events } = useLoaderData();
-  const [searchField, setSearchField] = useState("");
-  //const [selectedEvent, setSelectedEvent] = useState("");
+  const [searchField, setSearchField] = useState("1");
+
   const [value, setValue] = useState("");
   console.log(events);
-  // const eventsWithCategory = events.map(event => {
-  //   return {
-  //     ...event,
-  //     categories: event.categoryIds.map(
-  //       id => categories.find(category => category.id == id).name
-  //     ),
-  //     userName: users.find(user => user.id == event.createdBy).name,
-  //     userImage: users.find(user => user.id == event.createdBy).image,
-  //   };
-  // });
-
-  // const clearTime = eventsWithCategory.map(event => {
-  //   const start = event.startTime.split("T");
-  //   const clearStartTime = start[1].slice(0, 5);
-  //   const end = event.endTime.split("T");
-  //   const clearEndTime = end[1].slice(0, 5);
-  //   return {
-  //     ...event,
-  //     startTime: clearStartTime,
-  //     endTime: clearEndTime,
-  //   };
-  // });
 
   const handleChange = event => {
     setSearchField(event.target.value);
@@ -69,7 +47,11 @@ export const EventsPage = () => {
     <Flex flexDirection={"column"} bg="lightsteelblue" w="100%">
       <Flex flexDir="row">
         <Flex flexDir="column">
-          <TextInput item={searchField} changeFn={handleChange} width="15em" />
+          <SearchInput
+            item={searchField}
+            changeFn={handleChange}
+            width="15em"
+          />
           <RadioGroup m="0 0 15px 20px" onChange={setValue} value={value}>
             <Stack align="center" direction="row">
               <Radio value={1}>Sports</Radio>
@@ -87,20 +69,16 @@ export const EventsPage = () => {
       </Flex>
 
       {searchField ? (
-        <CardPage
-          item={matchedEvents}
-          key={matchedEvents.id}
-          //clickFn={setSelectedEvent}
-        />
+        <EventPage item={matchedEvents} key={matchedEvents.id} />
       ) : (
         <>
           <Wrap>
             <WrapItem>
               <Center gap={4}>
-                <Link to={`events/${events.id}`}>
-                  {/* {events.map(event => (
-                    <CardPage item={events} key={events.id} />
-                  ))} */}
+                <Link to={`/events/:eventId`}>
+                  {events.map(event => (
+                    <CardPage item={event} key={event.id} />
+                  ))}
                 </Link>
               </Center>
             </WrapItem>

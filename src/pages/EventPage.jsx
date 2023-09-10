@@ -15,7 +15,6 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { useLoaderData, Link } from "react-router-dom";
-import { ModalDelete } from "./ModalDelete";
 
 export const loader = async ({ params }) => {
   console.log(params);
@@ -31,7 +30,7 @@ export const loader = async ({ params }) => {
 
 export const EventPage = () => {
   const { event, categories, users } = useLoaderData();
-
+  console.log(event);
   const eventsWithCategory = event.map(event => {
     return {
       ...event,

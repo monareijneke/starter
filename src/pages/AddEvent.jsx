@@ -13,11 +13,11 @@ import {
   Select,
 } from "@chakra-ui/react";
 
-export const action = async ({ request }) => {
-  const formData = Object.fromEntries(await request.formData());
+export const createAction = async ({ request }) => {
+  const data = Object.fromEntries(await request.formData());
   const newId = await fetch("http://localhost:3000/events", {
     method: "POST",
-    body: JSON.stringify(formData),
+    body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
   })
     .then(res => res.json())
@@ -25,13 +25,10 @@ export const action = async ({ request }) => {
   return redirect(`/events/${newId}`);
 };
 
-export const loader = async ({ params }) => {
-  console.log(params);
-  // const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
+export const loader = async () => {
   const categories = await fetch("http://localhost:3000/categories");
   const users = await fetch("http://localhost:3000/users");
   return {
-    // event: await event.json(),
     categories: await categories.json(),
     users: await users.json(),
   };
@@ -39,27 +36,6 @@ export const loader = async ({ params }) => {
 
 export const AddEvent = () => {
   const { users, categories } = useLoaderData();
-  console.log(categories);
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // // const [startTime, setStartTime] = useState("");
-  // // const [endTime, setEndTime] = useState("");
-  // // const [createdBy, setCreatedBy] = useState("");
-  // // const [date, setDate] = useState("");
-  // // const [categoryIds, setCategoryIds] = useState("");
-
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   const newEvent = {
-  //     title,
-  //     description,
-  //     startTime,
-  //     endTime,
-  //     createdBy,
-  //     Date,
-  //   };
-  //   console.log(newEvent);
-  // };
 
   return (
     <>
@@ -67,12 +43,12 @@ export const AddEvent = () => {
         <Heading padding="5px" fontSize="md">
           Input new Event
         </Heading>
-        <Link to={`/`}>
+        <Link to={"/"}>
           <Button colorScheme="gray" size="sm" type="back">
             back
           </Button>
         </Link>
-        <Form>
+        <Form method="POST" action="/add">
           <FormControl>
             <FormLabel>Title</FormLabel>
             <Input type="text" name="title" width="sm" />
@@ -85,8 +61,8 @@ export const AddEvent = () => {
               rows="8"
             />
           </FormControl>
-          <FormControl display="flex" alignItems="center" m="8">
-            <HStack spacing="5">
+          <FormControl display="flex" ml="2" mt="4">
+            <HStack spacing="4">
               <FormLabel mb="0">Category</FormLabel>
               <Select variant="outline" name="categoryIds">
                 {categories.map(category => (
@@ -112,6 +88,10 @@ export const AddEvent = () => {
             <Input type="text" name="location" width="75" />
           </FormControl>
           <FormControl display="flex" m="2">
+            <FormLabel width="20">Date</FormLabel>
+            <Input type="date" name="date" w="75" />
+          </FormControl>
+          <FormControl display="flex" m="2">
             <FormLabel width="20">From</FormLabel>
             <Input type="time" name="startTime" w="75" />
           </FormControl>
@@ -120,7 +100,6 @@ export const AddEvent = () => {
             <Input type="time" name="endTime" width="75" />
           </FormControl>
 
-          <hr />
           <Stack>
             <Button colorScheme="teal" size="sm" type="submit">
               sumbit

@@ -1,6 +1,6 @@
 import { Input, Box } from "@chakra-ui/react";
 
-export const TextInput = ({ changeFn, item }) => (
+export const SearchInput = ({ changeFn, item }) => (
   <Box align="center">
     <Input
       m="25px"
