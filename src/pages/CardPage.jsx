@@ -10,9 +10,35 @@ import {
   CardBody,
   Image,
 } from "@chakra-ui/react";
+import { useLoaderData } from "react-router-dom";
 
-export const CardPage = ({ item }) => {
-  console.log(item);
+export const loader = async () => {
+  const categories = await fetch("http://localhost:3000/categories");
+  const users = await fetch("http://localhost:3000/users");
+  return {
+    categories: await categories.json(),
+    users: await users.json(),
+  };
+};
+
+export const CardPage = event => {
+  const { categories, users } = useLoaderData();
+
+  const eventWithCategory = {
+    ...event.item,
+    categories: event.item.categoryIds.map(
+      id => categories.find(category => category.id == id).name
+    ),
+    userName: users.find(user => user.id == event.item.createdBy).name,
+    userImage: users.find(user => user.id == event.item.createdBy).image,
+  };
+
+  const finalEvent = {
+    ...eventWithCategory,
+    date: eventWithCategory.startTime.slice(0, 10).toString(),
+    startTime: eventWithCategory.startTime.split("T")[1].slice(0, 5).toString(),
+    endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
+  };
   return (
     <Grid>
       <Card
@@ -25,22 +51,22 @@ export const CardPage = ({ item }) => {
         <CardHeader>
           <Heading color="#38B2AC" size="md" align="center">
             CardPage
-            <Image src={item.image} borderRadius="5px" w="full" h="8em" />
-            {item.title}
+            <Image src={finalEvent.image} borderRadius="5px" w="full" h="8em" />
+            {finalEvent.title}
           </Heading>
-          <Tag key={item.categories} variant="outline" color="#38B2AC">
+          <Tag key={finalEvent.categories} variant="outline" color="#38B2AC">
             <TagLabel>
-              {item.categories.map(category => {
+              {finalEvent.categories.map(category => {
                 return category;
               })}
             </TagLabel>
           </Tag>
         </CardHeader>
         <CardBody pt={0}>
-          <Text fontSize="1em">{item.description}</Text>
+          <Text fontSize="1em">{finalEvent.description}</Text>
         </CardBody>
         <CardFooter fontSize="0.9em">
-          from {item.startTime} till {item.endTime}
+          from {event.startTime} till {finalEvent.endTime}
         </CardFooter>
       </Card>
     </Grid>

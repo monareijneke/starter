@@ -30,10 +30,9 @@ export const loader = async () => {
 
 export const EventsPage = () => {
   const { events } = useLoaderData();
-  const [searchField, setSearchField] = useState("1");
+  const [searchField, setSearchField] = useState("");
 
   const [value, setValue] = useState("");
-  console.log(events);
 
   const handleChange = event => {
     setSearchField(event.target.value);
@@ -73,13 +72,17 @@ export const EventsPage = () => {
       ) : (
         <>
           <Wrap>
-            <WrapItem>
-              <Center gap={4}>
-                <Link to={`/events/:eventId`}>
-                  <CardPage item={events} key={events.id} />
-                </Link>
-              </Center>
-            </WrapItem>
+            {events.map(event => (
+              <>
+                <WrapItem>
+                  <Center gap={4}>
+                    <Link to={`/events/${event.id}`}>
+                      <CardPage item={event} key={event.id} />
+                    </Link>
+                  </Center>
+                </WrapItem>
+              </>
+            ))}
           </Wrap>
         </>
       )}

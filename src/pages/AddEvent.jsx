@@ -16,13 +16,19 @@ import {
 
 export const createAction = async ({ request }) => {
   const data = Object.fromEntries(await request.formData());
+
   const modifyStartTime = data.date.concat(`T${data.startTime}`);
   const modifyEndTime = data.date.concat(`T${data.endTime}`);
+  const categoryToInteger = [parseInt(data.categoryIds)];
+  const userIdToInteger = parseInt(data.createdBy);
   const finalData = {
     ...data,
+    createdBy: userIdToInteger,
+    categoryIds: categoryToInteger,
     startTime: modifyStartTime,
     endTime: modifyEndTime,
   };
+
   const newId = await fetch("http://localhost:3000/events", {
     method: "POST",
     body: JSON.stringify(finalData),
@@ -30,6 +36,7 @@ export const createAction = async ({ request }) => {
   })
     .then(res => res.json())
     .then(json => json.id);
+
   return redirect(`/events/${newId}`);
 };
 
@@ -62,7 +69,7 @@ export const AddEvent = () => {
         <Heading padding="5px" fontSize="md">
           Input new Event
         </Heading>
-        <Link to={"/"}>
+        <Link to={`/`}>
           <Button colorScheme="gray" size="sm" type="back">
             back
           </Button>
@@ -85,7 +92,7 @@ export const AddEvent = () => {
               <FormLabel mb="0">Category</FormLabel>
               <Select variant="outline" name="categoryIds">
                 {categories.map(category => (
-                  <option key="" value={category.id}>
+                  <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 ))}
@@ -95,7 +102,7 @@ export const AddEvent = () => {
 
               <Select name="createdBy">
                 {users.map(user => (
-                  <option key="" value={user.id}>
+                  <option key={user.id} value={user.id}>
                     {user.name}
                   </option>
                 ))}
