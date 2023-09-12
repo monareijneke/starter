@@ -33,9 +33,16 @@ export const CardPage = event => {
     userImage: users.find(user => user.id == event.item.createdBy).image,
   };
 
+  const reverseString = date => {
+    const splitDate = date.split("-");
+    const reverseArray = splitDate.reverse();
+    const joinArray = reverseArray.join("-");
+    return joinArray;
+  };
+
   const finalEvent = {
     ...eventWithCategory,
-    date: eventWithCategory.startTime.slice(0, 10).toString(),
+    date: reverseString(eventWithCategory.startTime.slice(0, 10).toString()),
     startTime: eventWithCategory.startTime.split("T")[1].slice(0, 5).toString(),
     endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
   };
@@ -66,7 +73,8 @@ export const CardPage = event => {
           <Text fontSize="1em">{finalEvent.description}</Text>
         </CardBody>
         <CardFooter fontSize="0.9em">
-          from {event.startTime} till {finalEvent.endTime}
+          On {finalEvent.date} from {finalEvent.startTime} till{" "}
+          {finalEvent.endTime}
         </CardFooter>
       </Card>
     </Grid>
