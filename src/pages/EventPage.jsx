@@ -39,12 +39,25 @@ export const EventPage = () => {
     userImage: users.find(user => user.id == event.createdBy).image,
   };
 
+  const reverseString = date => {
+    const splitDate = date.split("-");
+    const reverseArray = splitDate.reverse();
+    const joinArray = reverseArray.join("-");
+    return joinArray;
+  };
+
   const finalEvent = {
     ...eventWithCategory,
-    date: eventWithCategory.startTime.slice(0, 10).toString(),
+    date: reverseString(eventWithCategory.startTime.slice(0, 10).toString()),
     startTime: eventWithCategory.startTime.split("T")[1].slice(0, 5).toString(),
     endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
   };
+
+  const handleDelete = event =>
+    fetch(`http://localhost:3000/events`, {
+      method: "DELETE",
+      body: JSON.stringify,
+    });
 
   return (
     <Center flexDir="column" align="center" w="100%" bg="lightgrey">
@@ -113,15 +126,19 @@ export const EventPage = () => {
             </Box>
             <Spacer />
             <Box w="16.5%">
-              <Link to={"/add"}>
-                <Button mt={1}>edit</Button>
-              </Link>
+              <Button
+                onClick={event => {
+                  event.target.value;
+                }}
+              >
+                edit
+              </Button>
             </Box>
             <Spacer />
             <Box w="16.5%">
-              <Link to={"/delete"}>
-                <Button mt={1}>delete</Button>
-              </Link>
+              <Button onClick={handleDelete} mt={1}>
+                delete
+              </Button>
             </Box>
             <Spacer />
             <Box w="16.5%">

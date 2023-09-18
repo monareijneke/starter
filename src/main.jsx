@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { DeleteEvent } from "./pages/DeleteEvent";
+
 import { EventPage, loader as eventPageLoader } from "./pages/EventPage";
 import { EventsPage, loader as eventsPageLoader } from "./pages/EventsPage";
 import {
@@ -9,6 +9,7 @@ import {
   AddEvent,
   loader as addEventLoader,
 } from "./pages/AddEvent";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 
@@ -22,11 +23,7 @@ const router = createBrowserRouter([
         element: <EventsPage />,
         loader: eventsPageLoader,
       },
-      {
-        path: "/delete",
-        element: <DeleteEvent />,
-        //loader: eventsPageLoader,
-      },
+
       {
         path: `/events/:eventId`,
         element: <EventPage />,

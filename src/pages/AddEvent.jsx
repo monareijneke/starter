@@ -76,15 +76,32 @@ export const AddEvent = () => {
         </Link>
         <Form method="POST" action="/add">
           <FormControl>
-            <FormLabel>Title</FormLabel>
-            <Input type="text" name="title" width="sm" />
+            <Input
+              type="text"
+              name="title"
+              width="sm"
+              placeholder="title"
+              mt="4"
+              required
+            />
           </FormControl>
           <FormControl>
-            <FormLabel>Decription</FormLabel>
+            <Input
+              type="url"
+              name="image"
+              pattern="https://.*"
+              width="sm"
+              placeholder="http://image-url"
+              mt="4"
+            />
+          </FormControl>
+          <FormControl>
             <Textarea
               name="description"
               placeholder="Enter a description of the event"
               rows="8"
+              mt="4"
+              w="sm"
             />
           </FormControl>
           <FormControl display="flex" ml="2" mt="4">

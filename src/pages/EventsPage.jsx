@@ -14,6 +14,7 @@ import {
   Radio,
   RadioGroup,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
 
 export const loader = async () => {
@@ -29,11 +30,33 @@ export const loader = async () => {
 };
 
 export const EventsPage = () => {
-  const { events } = useLoaderData();
+  const { events, categories } = useLoaderData();
   const [searchField, setSearchField] = useState("");
+  const [radioValue, setRadioValue] = useState("");
 
-  const [value, setValue] = useState("");
+  // const eventsWithCategories = events => {
+  //   events.forEach(event => {
+  //     ({
+  //       ...events,
+  //       categories: event.categoryIds.map(
+  //         id => categories.find(category => category.id == id).name
+  //       ),
+  //     });
+  //   });
+  //   eventsWithCategories();
+  // };
 
+  // console.log(events);
+
+  const toast = useToast();
+  const showToast = value => {
+    toast({
+      title: `you selected ${value}`,
+      duration: 1500,
+      status: "success",
+      position: "top",
+    });
+  };
   const handleChange = event => {
     setSearchField(event.target.value);
   };
@@ -41,6 +64,16 @@ export const EventsPage = () => {
   const matchedEvents = events.filter(event => {
     return event.title.toLowerCase().includes(searchField.toLowerCase());
   });
+
+  const handleRadioButtonChange = value => {
+    showToast(value);
+    setRadioValue(value);
+  };
+
+  // const selectedCategory = eventsWithCategories.filter(event => {
+  //   return event.categories.toLowerCase().includes(radioValue.toLowerCase());
+  // });
+  // console.log(selectedCategory);
 
   return (
     <Flex flexDirection={"column"} bg="lightsteelblue">
@@ -51,11 +84,15 @@ export const EventsPage = () => {
             changeFn={handleChange}
             width="15em"
           />
-          <RadioGroup m="0 0 15px 20px" onChange={setValue} value={value}>
+          <RadioGroup
+            m="0 0 15px 20px"
+            onChange={handleRadioButtonChange}
+            value={radioValue}
+          >
             <Stack align="center" direction="row">
-              <Radio value={1}>Sports</Radio>
-              <Radio value={2}>Games</Radio>
-              <Radio value={3}>Relaxation</Radio>
+              <Radio value={"Sports"}>Sports</Radio>
+              <Radio value={"Games"}>Games</Radio>
+              <Radio value={"Relaxation"}>Relaxation</Radio>
             </Stack>
           </RadioGroup>
         </Flex>
@@ -67,7 +104,9 @@ export const EventsPage = () => {
         </Link>
       </Flex>
 
-      {searchField ? (
+      {radioValue ? (
+        <EventPage item={selectedCategory} key={selectedCategory.id} />
+      ) : searchField ? (
         <EventPage item={matchedEvents} key={matchedEvents.id} />
       ) : (
         <>

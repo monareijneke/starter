@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardBody,
   Image,
+  HStack,
 } from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 
@@ -57,17 +58,17 @@ export const CardPage = event => {
       >
         <CardHeader>
           <Heading color="#38B2AC" size="md" align="center">
-            CardPage
             <Image src={finalEvent.image} borderRadius="5px" w="full" h="8em" />
             {finalEvent.title}
           </Heading>
-          <Tag key={finalEvent.categories} variant="outline" color="#38B2AC">
-            <TagLabel>
-              {finalEvent.categories.map(category => {
-                return category;
-              })}
-            </TagLabel>
-          </Tag>
+
+          <HStack padding={2} spacing={2}>
+            {finalEvent.categories.map(category => (
+              <Tag key={category} variant="outline" color="#38B2AC">
+                <TagLabel>{category}</TagLabel>
+              </Tag>
+            ))}
+          </HStack>
         </CardHeader>
         <CardBody pt={0}>
           <Text fontSize="1em">{finalEvent.description}</Text>
