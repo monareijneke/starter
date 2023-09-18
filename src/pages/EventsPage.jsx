@@ -15,6 +15,7 @@ import {
   RadioGroup,
   Stack,
   useToast,
+  Input,
 } from "@chakra-ui/react";
 
 export const loader = async () => {
@@ -43,10 +44,9 @@ export const EventsPage = () => {
   //       ),
   //     });
   //   });
-  //   eventsWithCategories();
   // };
 
-  // console.log(events);
+  // console.log(eventsWithCategories);
 
   const toast = useToast();
   const showToast = value => {
@@ -57,13 +57,17 @@ export const EventsPage = () => {
       position: "top",
     });
   };
-  const handleChange = event => {
-    setSearchField(event.target.value);
-  };
 
   const matchedEvents = events.filter(event => {
     return event.title.toLowerCase().includes(searchField.toLowerCase());
   });
+
+  const handleKeyDown = event => {
+    console.log(event.key);
+    if (event.key === `Enter`) {
+      event.preventDefault();
+    }
+  };
 
   const handleRadioButtonChange = value => {
     showToast(value);
@@ -79,14 +83,22 @@ export const EventsPage = () => {
     <Flex flexDirection={"column"} bg="lightsteelblue">
       <Flex flexDir="row">
         <Flex flexDir="column">
-          <SearchInput
-            item={searchField}
-            changeFn={handleChange}
-            width="15em"
+          <Input
+            m="25px"
+            placeholder="search on eventname"
+            width="auto"
+            borderColor="green"
+            variant="filled"
+            type="text"
+            id="searchField"
+            name="searchField"
+            value={searchField}
+            onChange={event => setSearchField(event.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <RadioGroup
             m="0 0 15px 20px"
-            onChange={handleRadioButtonChange}
+            changeFn={handleRadioButtonChange}
             value={radioValue}
           >
             <Stack align="center" direction="row">
@@ -104,10 +116,15 @@ export const EventsPage = () => {
         </Link>
       </Flex>
 
-      {radioValue ? (
+      {/* {radioValue ? (
         <EventPage item={selectedCategory} key={selectedCategory.id} />
-      ) : searchField ? (
-        <EventPage item={matchedEvents} key={matchedEvents.id} />
+      ) : */}
+      {searchField.length ? (
+        <>
+          {matchedEvents.map(event => (
+            <EventPage item={event} key={event.id} />
+          ))}
+        </>
       ) : (
         <>
           <Wrap>

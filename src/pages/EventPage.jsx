@@ -17,6 +17,7 @@ import {
 import { useLoaderData, Link } from "react-router-dom";
 
 export const loader = async ({ params }) => {
+  console.log(params);
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
   const categories = await fetch("http://localhost:3000/categories");
   const users = await fetch("http://localhost:3000/users");
@@ -38,7 +39,7 @@ export const EventPage = () => {
     userName: users.find(user => user.id == event.createdBy).name,
     userImage: users.find(user => user.id == event.createdBy).image,
   };
-
+  console.log(eventWithCategory);
   const reverseString = date => {
     const splitDate = date.split("-");
     const reverseArray = splitDate.reverse();
