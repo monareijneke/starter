@@ -35,18 +35,16 @@ export const EventsPage = () => {
   const [searchField, setSearchField] = useState("");
   const [radioValue, setRadioValue] = useState("");
 
-  // const eventsWithCategories = events => {
-  //   events.forEach(event => {
-  //     ({
-  //       ...events,
-  //       categories: event.categoryIds.map(
-  //         id => categories.find(category => category.id == id).name
-  //       ),
-  //     });
-  //   });
-  // };
-
-  // console.log(eventsWithCategories);
+  const eventsWithCategories = events => {
+    events.map(event => ({
+      ...events,
+      categories: event.categoryIds.map(
+        id => categories.find(category => category.id == id).name
+      ),
+    }));
+  };
+  //changed from forEach to map
+  console.log(eventsWithCategories); //(events2=>{  enz ......})
 
   const toast = useToast();
   const showToast = value => {
@@ -98,7 +96,7 @@ export const EventsPage = () => {
           />
           <RadioGroup
             m="0 0 15px 20px"
-            changeFn={handleRadioButtonChange}
+            onChange={handleRadioButtonChange}
             value={radioValue}
           >
             <Stack align="center" direction="row">
@@ -119,7 +117,7 @@ export const EventsPage = () => {
       {/* {radioValue ? (
         <EventPage item={selectedCategory} key={selectedCategory.id} />
       ) : */}
-      {searchField.length ? (
+      {searchField ? (
         <>
           {matchedEvents.map(event => (
             <EventPage item={event} key={event.id} />

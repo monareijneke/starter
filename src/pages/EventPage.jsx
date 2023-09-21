@@ -38,8 +38,8 @@ export const EventPage = () => {
     ),
     userName: users.find(user => user.id == event.createdBy).name,
     userImage: users.find(user => user.id == event.createdBy).image,
-  };
-  console.log(eventWithCategory);
+  }; //created correct events with category name
+
   const reverseString = date => {
     const splitDate = date.split("-");
     const reverseArray = splitDate.reverse();
@@ -53,11 +53,12 @@ export const EventPage = () => {
     startTime: eventWithCategory.startTime.split("T")[1].slice(0, 5).toString(),
     endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
   };
+  console.log(finalEvent); //creates correct event
 
-  const handleDelete = event =>
+  const handleDelete = () =>
     fetch(`http://localhost:3000/events`, {
       method: "DELETE",
-      body: JSON.stringify,
+      headers: "Content-Type:application/json",
     });
 
   return (
