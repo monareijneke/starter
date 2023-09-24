@@ -13,6 +13,7 @@ import {
   Box,
   Spacer,
   Image,
+  useToast,
 } from "@chakra-ui/react";
 import { useLoaderData, Link } from "react-router-dom";
 
@@ -54,13 +55,23 @@ export const EventPage = () => {
     endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
   };
   console.log(finalEvent); //creates correct event
-
-  const handleDelete = () =>
-    fetch(`http://localhost:3000/events`, {
-      method: "DELETE",
-      headers: "Content-Type:application/json",
+  const toast = useToast();
+  const showToast = id => {
+    toast({
+      title: "Warning",
+      description: `you deleted ${id.title}`,
+      duration: 3000,
+      isClosable: true,
+      status: "warning",
+      position: "top",
     });
-
+  };
+  const handleDelete = id => {
+    showToast(id);
+    fetch(`http://localhost:3000/events/${id.id}`, {
+      method: "DELETE",
+    });
+  };
   return (
     <Center flexDir="column" align="center" w="100%" bg="lightgrey">
       <Card w="100%" h="full">
@@ -128,19 +139,23 @@ export const EventPage = () => {
             </Box>
             <Spacer />
             <Box w="16.5%">
-              <Button
-                onClick={event => {
-                  event.target.value;
-                }}
-              >
-                edit
-              </Button>
+              <Link to={"/edit"}>
+                <Button
+                  onClick={event => {
+                    event.target.value;
+                  }}
+                >
+                  edit
+                </Button>
+              </Link>
             </Box>
             <Spacer />
             <Box w="16.5%">
-              <Button onClick={handleDelete} mt={1}>
-                delete
-              </Button>
+              <Link to={"/"}>
+                <Button onClick={() => handleDelete(event)} mt={1}>
+                  delete
+                </Button>
+              </Link>
             </Box>
             <Spacer />
             <Box w="16.5%">

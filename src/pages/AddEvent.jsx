@@ -7,7 +7,6 @@ import {
   Heading,
   FormLabel,
   Button,
-  Link,
   Stack,
   HStack,
   Select,
@@ -69,11 +68,7 @@ export const AddEvent = () => {
         <Heading padding="5px" fontSize="md">
           Input new Event
         </Heading>
-        <Link to={`/`}>
-          <Button colorScheme="gray" size="sm" type="back">
-            back
-          </Button>
-        </Link>
+
         <Form method="POST" action="/add">
           <FormControl>
             <Input

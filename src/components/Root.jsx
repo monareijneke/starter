@@ -6,7 +6,7 @@ import { Box } from "@chakra-ui/react";
 
 export const Root = () => {
   return (
-    <Box maxW="max" maxH="max">
+    <Box bgcolor="black" maxW="max" maxH="full">
       <Navigation />
 
       <Outlet />

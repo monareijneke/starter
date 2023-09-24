@@ -1,8 +1,8 @@
 import { React, useState } from "react";
 
 import { CardPage } from "./CardPage";
-import { EventPage } from "./EventPage";
-import { SearchInput } from "./SearchInput";
+// import { EventPage } from "./EventPage";
+// import { SearchInput } from "./SearchInput";
 import { useLoaderData, Link } from "react-router-dom";
 import {
   Spacer,
@@ -35,16 +35,14 @@ export const EventsPage = () => {
   const [searchField, setSearchField] = useState("");
   const [radioValue, setRadioValue] = useState("");
 
-  const eventsWithCategories = events => {
-    events.map(event => ({
-      ...events,
-      categories: event.categoryIds.map(
-        id => categories.find(category => category.id == id).name
-      ),
-    }));
-  };
-  //changed from forEach to map
-  console.log(eventsWithCategories); //(events2=>{  enz ......})
+  const eventsWithCategories = events.map(event => ({
+    ...event,
+    categories: event.categoryIds.map(
+      id => categories.find(category => category.id == id).name
+    ),
+  }));
+  // nieuw: ná eventsWithCategories, zodat je dit mee kan geven als state
+  const [filteredEvents, setFilteredEvents] = useState(eventsWithCategories);
 
   const toast = useToast();
   const showToast = value => {
@@ -56,20 +54,33 @@ export const EventsPage = () => {
     });
   };
 
-  const matchedEvents = events.filter(event => {
-    return event.title.toLowerCase().includes(searchField.toLowerCase());
-  });
+  // let matchedEvents = events.filter(event => {
+  //   return event.title.toLowerCase().includes(searchField.toLowerCase());
+  // });
 
-  const handleKeyDown = event => {
-    console.log(event.key);
-    if (event.key === `Enter`) {
-      event.preventDefault();
-    }
+  //nieuw
+
+  const handleSearchInputChange = value => {
+    setSearchField(value);
+    setFilteredEvents(
+      eventsWithCategories.filter(event => {
+        return event.title.toLowerCase().includes(value.toLowerCase());
+      })
+    );
   };
 
   const handleRadioButtonChange = value => {
     showToast(value);
     setRadioValue(value);
+    //nieuw
+    setFilteredEvents(
+      eventsWithCategories.filter(event => {
+        return event?.categories.includes(value.toLowerCase());
+      })
+    );
+    // matchedEvents = eventsWithCategories.filter(event => {
+    //   return event?.categories.includes();
+    // });
   };
 
   // const selectedCategory = eventsWithCategories.filter(event => {
@@ -91,8 +102,7 @@ export const EventsPage = () => {
             id="searchField"
             name="searchField"
             value={searchField}
-            onChange={event => setSearchField(event.target.value)}
-            onKeyDown={handleKeyDown}
+            onChange={event => handleSearchInputChange(event.target.value)}
           />
           <RadioGroup
             m="0 0 15px 20px"
@@ -116,30 +126,29 @@ export const EventsPage = () => {
 
       {/* {radioValue ? (
         <EventPage item={selectedCategory} key={selectedCategory.id} />
-      ) : */}
+      ) :
       {searchField ? (
         <>
           {matchedEvents.map(event => (
             <EventPage item={event} key={event.id} />
           ))}
         </>
-      ) : (
-        <>
-          <Wrap>
-            {events.map(event => (
-              <>
-                <WrapItem>
-                  <Center gap={4}>
-                    <Link to={`/events/${event.id}`}>
-                      <CardPage item={event} key={event.id} />
-                    </Link>
-                  </Center>
-                </WrapItem>
-              </>
-            ))}
-          </Wrap>
-        </>
-      )}
+      ) : ( */}
+      <>
+        <Wrap>
+          {filteredEvents.map(event => (
+            <>
+              <WrapItem>
+                <Center gap={4}>
+                  <Link to={`/events/${event.id}`}>
+                    <CardPage item={event} key={event.id} />
+                  </Link>
+                </Center>
+              </WrapItem>
+            </>
+          ))}
+        </Wrap>
+      </>
     </Flex>
   );
 };
