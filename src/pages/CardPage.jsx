@@ -53,8 +53,12 @@ export const CardPage = event => {
         backgroundColor="gray.100"
         variant="elevated"
         borderRadius={10}
+        border="solid"
         cursor="pointer"
-        _hover={{ shadow: "dark-lg" }}
+        _hover={{
+          shadow: "dark-lg",
+          backgroundColor: "white",
+        }}
       >
         <CardHeader>
           <Heading color="#38B2AC" size="md" align="center">

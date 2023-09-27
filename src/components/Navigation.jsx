@@ -5,7 +5,7 @@ import { Text, Box } from "@chakra-ui/react";
 
 export const Navigation = () => {
   return (
-    <Box bg="grey">
+    <Box bg="blue.500">
       <Text textAlign="center" color="white" fontWeight="bold">
         Global Event Society
         {/* <ul>

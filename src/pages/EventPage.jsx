@@ -18,7 +18,6 @@ import {
 import { useLoaderData, Link } from "react-router-dom";
 
 export const loader = async ({ params }) => {
-  console.log(params);
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
   const categories = await fetch("http://localhost:3000/categories");
   const users = await fetch("http://localhost:3000/users");
@@ -39,7 +38,7 @@ export const EventPage = () => {
     ),
     userName: users.find(user => user.id == event.createdBy).name,
     userImage: users.find(user => user.id == event.createdBy).image,
-  }; //created correct events with category name
+  }; //create correct events with category name
 
   const reverseString = date => {
     const splitDate = date.split("-");
@@ -53,8 +52,8 @@ export const EventPage = () => {
     date: reverseString(eventWithCategory.startTime.slice(0, 10).toString()),
     startTime: eventWithCategory.startTime.split("T")[1].slice(0, 5).toString(),
     endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
-  };
-  console.log(finalEvent); //creates correct event
+  }; //create final event with usable time value
+
   const toast = useToast();
   const showToast = id => {
     toast({
@@ -73,8 +72,14 @@ export const EventPage = () => {
     });
   };
   return (
-    <Center flexDir="column" align="center" w="100%" bg="lightgrey">
-      <Card w="100%" h="full">
+    <Center
+      display="flex"
+      flexDir="column"
+      align="center"
+      w="100%"
+      bg="lightgrey"
+    >
+      <Card minWidth={450} h="full">
         <CardHeader fontWeight="bold">
           <h1>{finalEvent.title}</h1>
           <CardHeader m={0} p={0}>
@@ -122,7 +127,7 @@ export const EventPage = () => {
           </Flex>
         </CardBody>
         <hr />
-        <CardFooter>
+        <CardFooter pl={-5} pr={0}>
           <Flex w="100%">
             <Box w="50%">
               <Tag size="lg" borderRadius="full" bgColor="white">
@@ -134,33 +139,45 @@ export const EventPage = () => {
                   mr={3}
                 />
 
-                <TagLabel> {finalEvent.userName}</TagLabel>
+                <TagLabel font={9}> {finalEvent.userName}</TagLabel>
               </Tag>
             </Box>
             <Spacer />
+
+            {/* buttons */}
             <Box w="16.5%">
-              <Link to={"/edit"}>
-                <Button
-                  onClick={event => {
-                    event.target.value;
-                  }}
-                >
-                  edit
-                </Button>
-              </Link>
+              <Button
+                colorScheme="blue"
+                size="sm"
+                padding={4}
+                onClick={event => {
+                  event.target.value;
+                }}
+              >
+                edit
+              </Button>
             </Box>
             <Spacer />
+
             <Box w="16.5%">
               <Link to={"/"}>
-                <Button onClick={() => handleDelete(event)} mt={1}>
+                <Button
+                  colorScheme="blue"
+                  size="sm"
+                  padding={4}
+                  onClick={() => handleDelete(event)}
+                >
                   delete
                 </Button>
               </Link>
             </Box>
             <Spacer />
+
             <Box w="16.5%">
               <Link to={"/"}>
-                <Button mt={1}>back</Button>
+                <Button colorScheme="blue" size="sm" padding={4}>
+                  back
+                </Button>
               </Link>
             </Box>
           </Flex>

@@ -1,8 +1,5 @@
 import { React, useState } from "react";
-
 import { CardPage } from "./CardPage";
-// import { EventPage } from "./EventPage";
-// import { SearchInput } from "./SearchInput";
 import { useLoaderData, Link } from "react-router-dom";
 import {
   Spacer,
@@ -41,7 +38,7 @@ export const EventsPage = () => {
       id => categories.find(category => category.id == id).name
     ),
   }));
-  // nieuw: ná eventsWithCategories, zodat je dit mee kan geven als state
+
   const [filteredEvents, setFilteredEvents] = useState(eventsWithCategories);
 
   const toast = useToast();
@@ -53,12 +50,6 @@ export const EventsPage = () => {
       position: "top",
     });
   };
-
-  // let matchedEvents = events.filter(event => {
-  //   return event.title.toLowerCase().includes(searchField.toLowerCase());
-  // });
-
-  //nieuw
 
   const handleSearchInputChange = value => {
     setSearchField(value);
@@ -72,21 +63,13 @@ export const EventsPage = () => {
   const handleRadioButtonChange = value => {
     showToast(value);
     setRadioValue(value);
-    //nieuw
+
     setFilteredEvents(
       eventsWithCategories.filter(event => {
         return event?.categories.includes(value.toLowerCase());
       })
     );
-    // matchedEvents = eventsWithCategories.filter(event => {
-    //   return event?.categories.includes();
-    // });
   };
-
-  // const selectedCategory = eventsWithCategories.filter(event => {
-  //   return event.categories.toLowerCase().includes(radioValue.toLowerCase());
-  // });
-  // console.log(selectedCategory);
 
   return (
     <Flex flexDirection={"column"} bg="lightsteelblue">
@@ -96,7 +79,7 @@ export const EventsPage = () => {
             m="25px"
             placeholder="search on eventname"
             width="auto"
-            borderColor="green"
+            borderColor="blue.500"
             variant="filled"
             type="text"
             id="searchField"
@@ -118,37 +101,25 @@ export const EventsPage = () => {
         </Flex>
         <Spacer />
         <Link to={"/add"}>
-          <Button color="white" bg="darkblue" m="25px">
+          <Button color="white" bg="blue.600" m="25px">
             Add your own Event
           </Button>
         </Link>
       </Flex>
 
-      {/* {radioValue ? (
-        <EventPage item={selectedCategory} key={selectedCategory.id} />
-      ) :
-      {searchField ? (
-        <>
-          {matchedEvents.map(event => (
-            <EventPage item={event} key={event.id} />
-          ))}
-        </>
-      ) : ( */}
-      <>
-        <Wrap>
-          {filteredEvents.map(event => (
-            <>
-              <WrapItem>
-                <Center gap={4}>
-                  <Link to={`/events/${event.id}`}>
-                    <CardPage item={event} key={event.id} />
-                  </Link>
-                </Center>
-              </WrapItem>
-            </>
-          ))}
-        </Wrap>
-      </>
+      <Wrap>
+        {filteredEvents.map(event => (
+          <>
+            <WrapItem>
+              <Center gap={4}>
+                <Link to={`/events/${event.id}`}>
+                  <CardPage item={event} key={event.id} />
+                </Link>
+              </Center>
+            </WrapItem>
+          </>
+        ))}
+      </Wrap>
     </Flex>
   );
 };
