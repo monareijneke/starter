@@ -14,6 +14,8 @@ import {
   Spacer,
   Image,
   useToast,
+  List,
+  ListItem,
 } from "@chakra-ui/react";
 import { useLoaderData, Link } from "react-router-dom";
 
@@ -91,19 +93,19 @@ export const EventPage = () => {
         <CardBody align="left">
           <Flex>
             <Text fontStyle="italic" fontWeight="bold">
-              What:{" "}
+              What{" =>"}
             </Text>
             <Text> {finalEvent.description}</Text>
           </Flex>
           <Flex>
             <Text fontStyle="italic" fontWeight="bold">
-              When:{" "}
+              When{" =>"}
             </Text>
             <Text> {finalEvent.date}</Text>
           </Flex>
           <Flex>
             <Text fontStyle="italic" fontWeight="bold">
-              Time:{" "}
+              Time{" =>"}
             </Text>
             <Text>
               {finalEvent.startTime} - {finalEvent.endTime} hrs
@@ -111,17 +113,23 @@ export const EventPage = () => {
           </Flex>
           <Flex>
             <Text fontStyle="italic" fontWeight="bold">
-              Where:{" "}
+              Where{" =>"}
             </Text>
             <Text>{finalEvent.location}</Text>
           </Flex>
           <Flex>
             <Text fontStyle="italic" fontWeight="bold">
-              Categories:
+              Categories{" =>"}
             </Text>
             <Text>
               {finalEvent.categories.map(category => {
-                return category;
+                return (
+                  <>
+                    <List>
+                      <ListItem key={category.id}>{category}</ListItem>
+                    </List>
+                  </>
+                );
               })}
             </Text>
           </Flex>
@@ -146,16 +154,18 @@ export const EventPage = () => {
 
             {/* buttons */}
             <Box w="16.5%">
-              <Button
-                colorScheme="blue"
-                size="sm"
-                padding={4}
-                onClick={event => {
-                  event.target.value;
-                }}
-              >
-                edit
-              </Button>
+              <Link to={`/events/${event.id}/edit`}>
+                <Button
+                  colorScheme="blue"
+                  size="sm"
+                  padding={4}
+                  onClick={event => {
+                    event.target.value;
+                  }}
+                >
+                  edit
+                </Button>
+              </Link>
             </Box>
             <Spacer />
 

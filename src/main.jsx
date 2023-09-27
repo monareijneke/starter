@@ -8,6 +8,11 @@ import {
   AddEvent,
   loader as addEventLoader,
 } from "./pages/AddEvent";
+import {
+  //editAction,
+  EditEvent,
+  loader as editEventLoader,
+} from "./pages/EditEvent";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
@@ -34,6 +39,12 @@ const router = createBrowserRouter([
         element: <AddEvent />,
         loader: addEventLoader,
         action: createAction,
+      },
+      {
+        path: "/events/:eventId/edit",
+        element: <EditEvent />,
+        loader: editEventLoader,
+        //action: editAction,
       },
     ],
   },
