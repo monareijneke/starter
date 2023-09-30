@@ -1,4 +1,4 @@
-import { useLoaderData, redirect, Form } from "react-router-dom";
+import { useLoaderData, redirect, Form, Link } from "react-router-dom";
 import { useState } from "react";
 import {
   Card,
@@ -12,24 +12,7 @@ import {
   HStack,
   Select,
   useToast,
-  Link,
 } from "@chakra-ui/react";
-
-// export const editAction = async ({ request }) => {
-//   const data = Object.fromEntries(await request.formData());
-
-//   const modifyStartTime = data.date.concat(`T${data.startTime}`);
-//   const modifyEndTime = data.date.concat(`T${data.endTime}`);
-//   const categoryToInteger = [parseInt(data.categoryIds)];
-//   const userIdToInteger = parseInt(data.createdBy);
-//   const finalData = {
-//     ...data,
-//     createdBy: userIdToInteger,
-//     categoryIds: categoryToInteger,
-//     startTime: modifyStartTime,
-//     endTime: modifyEndTime,
-//   };
-// };
 
 export const loader = async ({ params }) => {
   const eventId = params.eventId;
@@ -49,12 +32,22 @@ export const EditEvent = () => {
 
   const onSubmit = async () => {
     showToast();
-    console.log(eventObject);
+
+    if (eventObject.startTime.length < 7) {
+      eventObject.startTime = eventObject.date.concat(
+        `T${eventObject.startTime}`
+      );
+    }
+    if (eventObject.endTime.length < 7) {
+      eventObject.endTime = eventObject.date.concat(`T${eventObject.endTime}`);
+    }
     await fetch(`http://localhost:3000/events/${event.id}`, {
       method: "PUT",
       body: JSON.stringify(eventObject),
       headers: { "Content-Type": "application/json" },
-    });
+    })
+      .then(res => res.json())
+      .then(json => json.id);
     return redirect("/");
   };
 
@@ -202,8 +195,8 @@ export const EditEvent = () => {
               sumbit the change
             </Button>
             <Link to={"/"}>
-              <Button colorScheme="gray" size="sm">
-                back without making changes
+              <Button colorScheme="blue" size="sm" padding={4}>
+                back
               </Button>
             </Link>
           </Stack>

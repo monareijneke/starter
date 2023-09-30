@@ -40,7 +40,7 @@ export const EventPage = () => {
     ),
     userName: users.find(user => user.id == event.createdBy).name,
     userImage: users.find(user => user.id == event.createdBy).image,
-  }; //create correct events with category name
+  };
 
   const reverseString = date => {
     const splitDate = date.split("-");
@@ -54,7 +54,7 @@ export const EventPage = () => {
     date: reverseString(eventWithCategory.startTime.slice(0, 10).toString()),
     startTime: eventWithCategory.startTime.split("T")[1].slice(0, 5).toString(),
     endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
-  }; //create final event with usable time value
+  };
 
   const toast = useToast();
   const showToast = id => {
@@ -122,15 +122,11 @@ export const EventPage = () => {
               Categories{" =>"}
             </Text>
             <Text>
-              {finalEvent.categories.map(category => {
-                return (
-                  <>
-                    <List>
-                      <ListItem key={category.id}>{category}</ListItem>
-                    </List>
-                  </>
-                );
-              })}
+              <List>
+                {finalEvent.categories.map(category => {
+                  return <ListItem key={category}>{category}</ListItem>;
+                })}
+              </List>
             </Text>
           </Flex>
         </CardBody>
@@ -152,7 +148,6 @@ export const EventPage = () => {
             </Box>
             <Spacer />
 
-            {/* buttons */}
             <Box w="16.5%">
               <Link to={`/events/${event.id}/edit`}>
                 <Button

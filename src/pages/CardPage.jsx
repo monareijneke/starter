@@ -47,6 +47,7 @@ export const CardPage = event => {
     startTime: eventWithCategory.startTime.split("T")[1].slice(0, 5).toString(),
     endTime: eventWithCategory.endTime.split("T")[1].slice(0, 5).toString(),
   };
+
   return (
     <Grid>
       <Card

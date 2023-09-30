@@ -11,7 +11,6 @@ import {
   Radio,
   RadioGroup,
   Stack,
-  useToast,
   Input,
 } from "@chakra-ui/react";
 
@@ -30,7 +29,7 @@ export const loader = async () => {
 export const EventsPage = () => {
   const { events, categories } = useLoaderData();
   const [searchField, setSearchField] = useState("");
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState(null);
 
   const eventsWithCategories = events.map(event => ({
     ...event,
@@ -40,16 +39,6 @@ export const EventsPage = () => {
   }));
 
   const [filteredEvents, setFilteredEvents] = useState(eventsWithCategories);
-
-  const toast = useToast();
-  const showToast = value => {
-    toast({
-      title: `you selected ${value}`,
-      duration: 1500,
-      status: "success",
-      position: "top",
-    });
-  };
 
   const handleSearchInputChange = value => {
     setSearchField(value);
@@ -61,7 +50,6 @@ export const EventsPage = () => {
   };
 
   const handleRadioButtonChange = value => {
-    showToast(value);
     setRadioValue(value);
 
     setFilteredEvents(
@@ -102,7 +90,7 @@ export const EventsPage = () => {
         <Spacer />
         <Link to={"/add"}>
           <Button color="white" bg="blue.600" m="25px">
-            Add your own Event
+            Add a new Event
           </Button>
         </Link>
       </Flex>
