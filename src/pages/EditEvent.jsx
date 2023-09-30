@@ -1,4 +1,4 @@
-import { useLoaderData, redirect, Form, Link } from "react-router-dom";
+import { useLoaderData, useNavigate, Form, Link } from "react-router-dom";
 import { useState } from "react";
 import {
   Card,
@@ -29,6 +29,7 @@ export const loader = async ({ params }) => {
 export const EditEvent = () => {
   const { event, users, categories } = useLoaderData();
   const [eventObject, setEventObject] = useState(event);
+  const navigate = useNavigate();
 
   const onSubmit = async () => {
     showToast();
@@ -48,7 +49,7 @@ export const EditEvent = () => {
     })
       .then(res => res.json())
       .then(json => json.id);
-    return redirect("/");
+    navigate("/");
   };
 
   const toast = useToast();

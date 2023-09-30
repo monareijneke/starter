@@ -1,4 +1,4 @@
-import { useLoaderData, redirect, Form } from "react-router-dom";
+import { useLoaderData, redirect, Form, Link } from "react-router-dom";
 import {
   Card,
   FormControl,
@@ -140,13 +140,18 @@ export const AddEvent = () => {
 
           <Stack>
             <Button
-              colorScheme="teal"
+              colorScheme="blue"
               size="sm"
               type="submit"
               onClick={showToast}
             >
               sumbit
             </Button>
+            <Link to={"/"}>
+              <Button colorScheme="gray" size="sm" width="100%">
+                back without changing
+              </Button>
+            </Link>
           </Stack>
         </Form>
       </Card>
