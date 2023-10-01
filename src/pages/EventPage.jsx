@@ -35,6 +35,7 @@ export const EventPage = () => {
 
   const eventWithCategory = {
     ...event,
+    key: event.id, //werkt niet
     categories: event.categoryIds.map(
       id => categories.find(category => category.id == id).name
     ),
@@ -60,7 +61,7 @@ export const EventPage = () => {
   const showToast = id => {
     toast({
       title: "Warning",
-      description: `you deleted ${id.title}`,
+      description: `you deleted <${id.title}>`,
       duration: 3000,
       isClosable: true,
       status: "warning",
@@ -74,14 +75,8 @@ export const EventPage = () => {
     });
   };
   return (
-    <Center
-      display="flex"
-      flexDir="column"
-      align="center"
-      w="100%"
-      bg="lightgrey"
-    >
-      <Card minWidth={450} h="full">
+    <Center display="flex" flexDir="column" align="center" bg="lightgrey">
+      <Card minW={450} h="full">
         <CardHeader fontWeight="bold">
           <h1>{finalEvent.title}</h1>
           <CardHeader m={0} p={0}>

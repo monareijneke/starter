@@ -64,7 +64,13 @@ export const AddEvent = () => {
 
   return (
     <>
-      <Card variant="elevated" borderRadius={10} align="center" ml="10">
+      <Card
+        minw="500px"
+        variant="elevated"
+        borderRadius={10}
+        align="center"
+        m="10"
+      >
         <Heading padding="5px" fontSize="md">
           Input new Event
         </Heading>
@@ -149,7 +155,7 @@ export const AddEvent = () => {
             </Button>
             <Link to={"/"}>
               <Button colorScheme="gray" size="sm" width="100%">
-                back without changing
+                back
               </Button>
             </Link>
           </Stack>

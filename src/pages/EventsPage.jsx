@@ -29,10 +29,11 @@ export const loader = async () => {
 export const EventsPage = () => {
   const { events, categories } = useLoaderData();
   const [searchField, setSearchField] = useState("");
-  const [radioValue, setRadioValue] = useState(null);
+  const [radioValue, setRadioValue] = useState("");
 
   const eventsWithCategories = events.map(event => ({
     ...event,
+    key: event.id, //dit is niet de oplossing
     categories: event.categoryIds.map(
       id => categories.find(category => category.id == id).name
     ),

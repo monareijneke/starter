@@ -33,15 +33,25 @@ export const EditEvent = () => {
 
   const onSubmit = async () => {
     showToast();
+    console.log(event);
+    console.log(eventObject);
 
-    if (eventObject.startTime.length < 7) {
+    if (eventObject.startTime.length === 5) {
       eventObject.startTime = eventObject.date.concat(
         `T${eventObject.startTime}`
       );
-    }
-    if (eventObject.endTime.length < 7) {
+    } else
+      eventObject.startTime = eventObject.date.concat(
+        eventObject.startTime.slice(10)
+      );
+
+    if (eventObject.endTime.length === 5) {
       eventObject.endTime = eventObject.date.concat(`T${eventObject.endTime}`);
-    }
+    } else
+      eventObject.endTime = eventObject.date.concat(
+        eventObject.endTime.slice(10)
+      );
+
     await fetch(`http://localhost:3000/events/${event.id}`, {
       method: "PUT",
       body: JSON.stringify(eventObject),
@@ -56,8 +66,8 @@ export const EditEvent = () => {
   const showToast = () => {
     toast({
       title: "Submit",
-      description: "you are sending the changes",
-      duration: 3000,
+      description: "you succesfully changed the event",
+      duration: 4000,
       isClosable: true,
       status: "success",
       position: "top",
@@ -66,7 +76,7 @@ export const EditEvent = () => {
 
   return (
     <>
-      <Card variant="elevated" borderRadius={10} align="center" ml="10">
+      <Card variant="elevated" borderRadius={10} align="center" m="10">
         <Heading padding="5px" fontSize="md">
           Make your changes
         </Heading>
@@ -188,7 +198,7 @@ export const EditEvent = () => {
 
           <Stack>
             <Button
-              colorScheme="teal"
+              colorScheme="blue"
               size="sm"
               type="submit"
               onClick={onSubmit}
@@ -196,8 +206,8 @@ export const EditEvent = () => {
               sumbit the change
             </Button>
             <Link to={"/"}>
-              <Button colorScheme="blue" size="sm" padding={4}>
-                back
+              <Button colorScheme="gray" size="sm" width="100%">
+                back without making a change
               </Button>
             </Link>
           </Stack>
