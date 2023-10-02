@@ -33,7 +33,7 @@ export const EventsPage = () => {
 
   const eventsWithCategories = events.map(event => ({
     ...event,
-    key: event.id, //dit is niet de oplossing
+
     categories: event.categoryIds.map(
       id => categories.find(category => category.id == id).name
     ),
@@ -76,6 +76,7 @@ export const EventsPage = () => {
             value={searchField}
             onChange={event => handleSearchInputChange(event.target.value)}
           />
+
           <RadioGroup
             m="0 0 15px 20px"
             onChange={handleRadioButtonChange}
