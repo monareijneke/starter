@@ -99,7 +99,7 @@ export const EventsPage = () => {
       <Wrap>
         {filteredEvents.map(event => (
           <>
-            <WrapItem>
+            <WrapItem key={event.id}>
               <Center gap={4}>
                 <Link to={`/events/${event.id}`}>
                   <CardPage item={event} key={event.id} />

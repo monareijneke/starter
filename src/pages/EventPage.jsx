@@ -116,13 +116,13 @@ export const EventPage = () => {
             <Text fontStyle="italic" fontWeight="bold">
               Categories{" =>"}
             </Text>
-            <Text>
-              <List>
+            <List>
+              <Text>
                 {finalEvent.categories.map(category => {
                   return <ListItem key={category}>{category}</ListItem>;
                 })}
-              </List>
-            </Text>
+              </Text>
+            </List>
           </Flex>
         </CardBody>
         <hr />

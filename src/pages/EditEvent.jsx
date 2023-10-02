@@ -33,8 +33,6 @@ export const EditEvent = () => {
 
   const onSubmit = async () => {
     showToast();
-    console.log(event);
-    console.log(eventObject);
 
     if (eventObject.startTime.length === 5) {
       eventObject.startTime = eventObject.date.concat(
