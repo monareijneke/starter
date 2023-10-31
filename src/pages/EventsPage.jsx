@@ -99,15 +99,13 @@ export const EventsPage = () => {
 
       <Wrap>
         {filteredEvents.map(event => (
-          <>
-            <WrapItem key={event.id}>
-              <Center gap={4}>
-                <Link to={`/events/${event.id}`}>
-                  <CardPage item={event} key={event.id} />
-                </Link>
-              </Center>
-            </WrapItem>
-          </>
+          <WrapItem key={event.id}>
+            <Center gap={4}>
+              <Link to={`/events/${event.id}`}>
+                <CardPage item={event} />
+              </Link>
+            </Center>
+          </WrapItem>
         ))}
       </Wrap>
     </Flex>
